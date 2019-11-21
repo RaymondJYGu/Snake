@@ -3,6 +3,9 @@ import comp127graphics.GraphicsGroup;
 import comp127graphics.Image;
 import javafx.scene.SceneAntialiasing;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 public class Gameplay {
 
 
@@ -25,9 +28,41 @@ public Gameplay(){
     canvas.add(head);
     canvas.onMouseMove(event ->
     {
-        head.moveSnake(event.getPosition().getX(), event.getPosition().getY());
+        head.headMove();
     });
-
+ //   canvas.getWindowFrame().addKeyListener(new KeyListener() {
+//        @Override
+//        public void keyTyped(KeyEvent keyEvent) {
+//            System.out.println("Gameplay.keyTyped");
+//            int key = keyEvent.getKeyCode();
+//
+//            if (key == KeyEvent.VK_LEFT) {
+//                dx = -1;
+//            }
+//
+//            if (key == KeyEvent.VK_RIGHT) {
+//                dx = 1;
+//            }
+//
+//            if (key == KeyEvent.VK_UP) {
+//                dy = -1;
+//            }
+//
+//            if (key == KeyEvent.VK_DOWN) {
+//                dy = 1;
+//            }
+//        }
+//
+//        @Override
+//        public void keyPressed(KeyEvent keyEvent) {
+//            System.out.println("Gameplay.keyPressed");
+//        }
+//
+//        @Override
+//        public void keyReleased(KeyEvent keyEvent) {
+//            System.out.println("Gameplay.keyReleased");
+//        }
+//    });
 }
 
 
