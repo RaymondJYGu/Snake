@@ -7,47 +7,61 @@ public class SnakeHead extends Rectangle {
 
 
     private final double SNAKE_SPEED = 1;
+
     private double dx;
     private double dy;
     private double x;
     private double y;
-
-
 
     public SnakeHead(double x, double y, double width, double height) {
         super(x, y, width, height);
         setFilled(true);
         this.x = x;
         this.y = y;
-        dx = SNAKE_SPEED * 1;
-        dy = SNAKE_SPEED * 1;
-
-
+        this.dx = 0;
+        this.dy = 0;
     }
 
-    public void moveSnake(double newX, double newY) {
-        this.setPosition(newX, newY);
-        if (this.getX() < 0) {
-            this.setPosition(0, newY);
-        } else if (this.getX() + Gameplay.SNAKE_SQUARE > Gameplay.CANVAS_WIDTH) {
-            this.setPosition(Gameplay.CANVAS_WIDTH - Gameplay.SNAKE_SQUARE, newY);
+    public void moveSnake() {
+        //boundaries
+        if (this.getX() < 0) { //left
+            setDx(0);
+            //die method
         }
-        else if (this.getY() + Gameplay.SNAKE_SQUARE < 0){
-            this.setPosition(newX, 0);
+        if (this.getX() + Gameplay.SNAKE_SQUARE > Gameplay.CANVAS_WIDTH) { //right
+            setDx(0);
         }
-        else if (this.getY() + Gameplay.SNAKE_SQUARE > Gameplay.CANVAS_HEIGHT){
-            this.setPosition(newX, Gameplay.CANVAS_HEIGHT-Gameplay.SNAKE_SQUARE);
+        if (this.getY() < 0) { //top
+            setDy(0);
         }
-    }
+        if (this.getY() + Gameplay.SNAKE_SQUARE > Gameplay.CANVAS_HEIGHT) { //bottom
+            setDy(0);
+        }
 
-    public void headMove(){
-        x = x*dx;
-        y = y*dy;
-        this.setPosition(x,y);
+        x = x + (dx * .1);
+        y = y + (dy * .1);
+
+        this.setCenter(x, y);
     }
 
     public double getSNAKE_SPEED() {
         return SNAKE_SPEED;
+    }
+
+    public double getDx() {
+        return dx;
+    }
+
+    public double getDy() {
+        return dy;
+    }
+
+    public void setDx(double dx) {
+        this.dx = dx;
+    }
+
+    public void setDy(double dy) {
+        this.dy = dy;
     }
 
 
