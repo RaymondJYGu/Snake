@@ -1,5 +1,7 @@
+import comp127graphics.CanvasWindow;
 import comp127graphics.Ellipse;
 import comp127graphics.Rectangle;
+import comp127graphics.events.Key;
 
 public class SnakeHead extends Rectangle {
 
@@ -23,25 +25,68 @@ public class SnakeHead extends Rectangle {
     }
 
     public void moveSnake() {
-        //boundaries
+        checkBoundaries();
+        x = x + (dx * SNAKE_SPEED);
+        y = y + (dy * SNAKE_SPEED);
+
+        this.setCenter(x, y);
+    }
+
+    public void moveLeft(){
+        setDx(-1);
+        setDy(0);
+    }
+
+    public void moveRight(){
+        setDx(1);
+        setDy(0);
+    }
+
+    public void moveUp(){
+        setDx(0);
+        setDy(-1);
+    }
+
+    public void moveDown(){
+        setDx(0);
+        setDy(1);
+    }
+
+    public void checkKeyboardInput(CanvasWindow canvas) {
+        canvas.onKeyDown(event -> {
+            if (event.getKey() == Key.UP_ARROW) {
+                moveUp();  // change direction to upwards when the key goes down
+            }
+            if (event.getKey() == Key.DOWN_ARROW) {
+                moveDown();  // change direction to downwards when the key goes down
+            }
+            if (event.getKey() == Key.LEFT_ARROW) {
+                moveLeft();  // change direction to left when the key goes down
+            }
+            if (event.getKey() == Key.RIGHT_ARROW) {
+                moveRight();  // change direction to right when the key goes down
+            }
+        });
+    }
+
+    public void checkBoundaries() {
         if (this.getX() < 0) { //left
             setDx(0);
+            setDy(0);
             //die method
         }
         if (this.getX() + Gameplay.SNAKE_SQUARE > Gameplay.CANVAS_WIDTH) { //right
             setDx(0);
+            setDy(0);
         }
         if (this.getY() < 0) { //top
+            setDx(0);
             setDy(0);
         }
         if (this.getY() + Gameplay.SNAKE_SQUARE > Gameplay.CANVAS_HEIGHT) { //bottom
+            setDx(0);
             setDy(0);
         }
-
-        x = x + (dx * .1);
-        y = y + (dy * .1);
-
-        this.setCenter(x, y);
     }
 
     public double getSNAKE_SPEED() {
