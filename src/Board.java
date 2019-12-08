@@ -17,6 +17,8 @@ public class Board {
     chips, cookieMonster, cookie, frenchFries, juiceBox,
     kale, rice, waterBottle;
 
+    private GraphicsObject currentFood;
+
     public Board() {
         foods = new ArrayList<>();
         imageRender();
@@ -58,11 +60,18 @@ public class Board {
      * makes the first food item
      */
     public void makeFood (CanvasWindow canvas, double x, double y) {
-        GraphicsObject initialFood = foods.get(random.nextInt(foods.size()));
-        canvas.add(initialFood, x, y);
+        currentFood = foods.get(random.nextInt(foods.size()));
+        canvas.add(currentFood, x, y);
         System.out.println("food should be made");
     }
 
+    public void foodEaten(SnakeHead head, CanvasWindow canvas) {
+        if (currentFood.getBounds().intersects(head.getBounds())) {
+            canvas.remove(currentFood);
+            makeFood(canvas, random.nextInt(Gameplay.CANVAS_WIDTH), random.nextInt(Gameplay.CANVAS_HEIGHT));
+            head.snakeGrow();
+        }
+    }
 
 
 }

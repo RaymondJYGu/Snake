@@ -1,12 +1,13 @@
-import comp127graphics.CanvasWindow;
-import comp127graphics.Ellipse;
-import comp127graphics.Rectangle;
+import comp127graphics.*;
 import comp127graphics.events.Key;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SnakeHead extends Rectangle {
 
     private Ellipse eye;
-
+    private SnakeBody snakeBody;
 
     private final double SNAKE_SPEED = 1;
 
@@ -14,6 +15,7 @@ public class SnakeHead extends Rectangle {
     private double dy;
     private double x;
     private double y;
+    private Point previousPosition;
 
     public SnakeHead(double x, double y, double width, double height) {
         super(x, y, width, height);
@@ -22,14 +24,17 @@ public class SnakeHead extends Rectangle {
         this.y = y;
         this.dx = 0;
         this.dy = 0;
+        this.previousPosition = getPosition();
+        snakeBody = new SnakeBody(getCenter().getX() - width, getY(), width, height);
     }
 
     public void moveSnake() {
         checkBoundaries();
+        setPreviousPosition(getPosition());
         x = x + (dx * SNAKE_SPEED);
         y = y + (dy * SNAKE_SPEED);
-
-        this.setCenter(x, y);
+        this.setPosition(x, y);
+        snakeBody.bodyMove(this);
     }
 
     public void moveLeft(){
@@ -89,6 +94,11 @@ public class SnakeHead extends Rectangle {
         }
     }
 
+    public void snakeGrow() {
+        snakeBody.grow();
+    }
+
+
     public double getSNAKE_SPEED() {
         return SNAKE_SPEED;
     }
@@ -109,5 +119,25 @@ public class SnakeHead extends Rectangle {
         this.dy = dy;
     }
 
+    @Override
+    public double getX() {
+        return x;
+    }
 
+    @Override
+    public double getY() {
+        return y;
+    }
+
+    public Point getPreviousPosition() {
+        return previousPosition;
+    }
+
+    public void setPreviousPosition(Point previousPosition) {
+        this.previousPosition = previousPosition;
+    }
+
+    public GraphicsGroup getSnakeBodyGroup() {
+        return snakeBody.getSnakeBody();
+    }
 }

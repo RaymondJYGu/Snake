@@ -2,35 +2,51 @@ import comp127graphics.GraphicsGroup;
 import comp127graphics.GraphicsObject;
 import comp127graphics.Rectangle;
 
-public class SnakeBody extends Rectangle {
-    private GraphicsObject[] body;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
-    public SnakeBody(double x, double y, double width, double height, int numberOfSegments) {
-        super(x, y, width, height);
-        setFilled(true);
-        body = new GraphicsObject[numberOfSegments];
+public class SnakeBody {
+    private List<Rectangle> body;
+    private GraphicsGroup snakeBody;
 
-        generateSnakeBody();
+    public SnakeBody(double x, double y, double width, double height) {
+        body = new ArrayList<>();
+        body.add(new Rectangle(x-width/2, y, width, height));
+        snakeBody = new GraphicsGroup();
+        addBodyToGroup();
     }
 
-    public void generateSnakeBody() {
-        for(int i = 0; i < body.length; i++)
-        {
-            body[i]= new Rectangle(10,10,10,10);
-            body[i].setPosition(50,50+i*10);
+    public void addBodyToGroup() {
+        snakeBody.removeAll();
+        for (Rectangle rect: body) {
+            rect.setFilled(true);
+            rect.setFillColor(Color.GREEN);
+            snakeBody.add(rect);
         }
     }
 
 
-    public void bodyMove(double x, double y) {
-        for (int i = 0; i > body.length - 1; i++) {
-            body[i+1].setPosition(body[i].getPosition().getX(), body[i].getPosition().getY());
+    public void bodyMove(SnakeHead head) {
+        for (int i = body.size() - 1; i >= 0; i--) {
+            if(i == 0) {
+                body.get(i).setPosition(head.getPreviousPosition().getX() - head.getWidth(),
+                        head.getPreviousPosition().getY());
+            } else {
+                body.get(i).setPosition(body.get(i-1).getPosition().getX() - Gameplay.SNAKE_SQUARE,
+                        body.get(i-1).getPosition().getY());
+            }
         }
-        body[0].setPosition(x, y);
     }
 
+    public void grow() {
+        body.add(new Rectangle(body.get(body.size() - 1).getX(), body.get(body.size() - 1).getY(),
+                body.get(body.size() - 1).getWidth(),
+                body.get(body.size() - 1).getHeight()));
+        addBodyToGroup();
+    }
 
-
-
-
+    public GraphicsGroup getSnakeBody() {
+        return snakeBody;
+    }
 }

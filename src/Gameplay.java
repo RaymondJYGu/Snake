@@ -23,11 +23,16 @@ public class Gameplay {
         canvas.add(background);
         board = new Board();
         board.makeFood(canvas,random.nextInt(CANVAS_WIDTH), random.nextInt(CANVAS_HEIGHT)); // fix the border alignment
+
         head = new SnakeHead(CANVAS_WIDTH * 0.5, CANVAS_HEIGHT * 0.5,
                 SNAKE_SQUARE, SNAKE_SQUARE);
         canvas.add(head);
-        canvas.animate(() ->
-                head.moveSnake());
+        canvas.add(head.getSnakeBodyGroup());
+
+        canvas.animate(() -> {
+            head.moveSnake();
+            board.foodEaten(head,canvas);
+        });
 
         head.checkKeyboardInput(canvas);
     }
