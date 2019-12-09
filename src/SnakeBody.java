@@ -20,7 +20,7 @@ public class SnakeBody {
         addBodyToGroup();
     }
 
-    public void addBodyToGroup() {
+    public void addBodyToGroup() { // change color to spectrum, match growth rate
         snakeBody.removeAll();
         for (Rectangle rect: body) {
             rect.setFilled(true);
