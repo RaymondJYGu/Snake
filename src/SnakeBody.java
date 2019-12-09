@@ -5,6 +5,7 @@ import comp127graphics.Rectangle;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SnakeBody {
     private List<Rectangle> body;
@@ -12,7 +13,9 @@ public class SnakeBody {
 
     public SnakeBody(double x, double y, double width, double height) {
         body = new ArrayList<>();
-        body.add(new Rectangle(x-width/2, y, width, height));
+        for (int i = 0; i < 20; i++) {
+            body.add(new Rectangle(x-width/2, y, width, height));
+        }
         snakeBody = new GraphicsGroup();
         addBodyToGroup();
     }
@@ -21,7 +24,10 @@ public class SnakeBody {
         snakeBody.removeAll();
         for (Rectangle rect: body) {
             rect.setFilled(true);
-            rect.setFillColor(Color.GREEN);
+            int e = new Random().nextInt(255);
+            int f = new Random().nextInt(255);
+            int j = new Random().nextInt(255);
+            rect.setFillColor(new Color(e,f,j));
             snakeBody.add(rect);
         }
     }
@@ -30,16 +36,14 @@ public class SnakeBody {
     public void bodyMove(SnakeHead head) {
         for (int i = body.size() - 1; i >= 0; i--) {
             if(i == 0) {
-                body.get(i).setPosition(head.getPreviousPosition().getX() - head.getWidth(),
-                        head.getPreviousPosition().getY());
+                body.get(i).setPosition(head.getPreviousPosition());
             } else {
-                body.get(i).setPosition(body.get(i-1).getPosition().getX() - Gameplay.SNAKE_SQUARE,
-                        body.get(i-1).getPosition().getY());
+                body.get(i).setPosition(body.get(i-1).getPosition());
             }
         }
     }
 
-    public void grow() {
+    public void grow() { //make 20 segments per food
         body.add(new Rectangle(body.get(body.size() - 1).getX(), body.get(body.size() - 1).getY(),
                 body.get(body.size() - 1).getWidth(),
                 body.get(body.size() - 1).getHeight()));

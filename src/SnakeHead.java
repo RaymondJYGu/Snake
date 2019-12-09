@@ -16,6 +16,7 @@ public class SnakeHead extends Rectangle {
     private double x;
     private double y;
     private Point previousPosition;
+    private String currentDirection = "none";
 
     public SnakeHead(double x, double y, double width, double height) {
         super(x, y, width, height);
@@ -31,10 +32,11 @@ public class SnakeHead extends Rectangle {
     public void moveSnake() {
         checkBoundaries();
         setPreviousPosition(getPosition());
+        snakeBody.bodyMove(this);
         x = x + (dx * SNAKE_SPEED);
         y = y + (dy * SNAKE_SPEED);
         this.setPosition(x, y);
-        snakeBody.bodyMove(this);
+
     }
 
     public void moveLeft(){
@@ -57,19 +59,24 @@ public class SnakeHead extends Rectangle {
         setDy(1);
     }
 
+
     public void checkKeyboardInput(CanvasWindow canvas) {
         canvas.onKeyDown(event -> {
-            if (event.getKey() == Key.UP_ARROW) {
+            if (event.getKey() == Key.UP_ARROW && !(currentDirection.equals("down"))){
                 moveUp();  // change direction to upwards when the key goes down
+                currentDirection = "up";
             }
-            if (event.getKey() == Key.DOWN_ARROW) {
+            if (event.getKey() == Key.DOWN_ARROW && !(currentDirection.equals("up"))) {
                 moveDown();  // change direction to downwards when the key goes down
+                currentDirection = "down";
             }
             if (event.getKey() == Key.LEFT_ARROW) {
                 moveLeft();  // change direction to left when the key goes down
+                currentDirection = "left";
             }
             if (event.getKey() == Key.RIGHT_ARROW) {
                 moveRight();  // change direction to right when the key goes down
+                currentDirection = "right";
             }
         });
     }
