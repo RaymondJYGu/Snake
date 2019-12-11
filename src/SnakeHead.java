@@ -1,9 +1,6 @@
 import comp127graphics.*;
 import comp127graphics.events.Key;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SnakeHead extends Rectangle {
 
     private Ellipse eye;
@@ -17,6 +14,7 @@ public class SnakeHead extends Rectangle {
     private double y;
     private Point previousPosition;
     private String currentDirection = "none";
+    private boolean gameOver = false;
 
     public SnakeHead(double x, double y, double width, double height) {
         super(x, y, width, height);
@@ -32,6 +30,7 @@ public class SnakeHead extends Rectangle {
     public void moveSnake() {
         checkBoundaries();
         setPreviousPosition(getPosition());
+        snakeBody.intersects(this);
         snakeBody.bodyMove(this);
         x = x + (dx * SNAKE_SPEED);
         y = y + (dy * SNAKE_SPEED);
@@ -39,22 +38,22 @@ public class SnakeHead extends Rectangle {
 
     }
 
-    public void moveLeft(){
+    public void moveLeft() {
         setDx(-1);
         setDy(0);
     }
 
-    public void moveRight(){
+    public void moveRight() {
         setDx(1);
         setDy(0);
     }
 
-    public void moveUp(){
+    public void moveUp() {
         setDx(0);
         setDy(-1);
     }
 
-    public void moveDown(){
+    public void moveDown() {
         setDx(0);
         setDy(1);
     }
@@ -62,7 +61,7 @@ public class SnakeHead extends Rectangle {
 
     public void checkKeyboardInput(CanvasWindow canvas) {
         canvas.onKeyDown(event -> {
-            if (event.getKey() == Key.UP_ARROW && !(currentDirection.equals("down"))){
+            if (event.getKey() == Key.UP_ARROW && !(currentDirection.equals("down"))) {
                 moveUp();  // change direction to upwards when the key goes down
                 currentDirection = "up";
             }
@@ -85,19 +84,22 @@ public class SnakeHead extends Rectangle {
         if (this.getX() < 0) { //left
             setDx(0);
             setDy(0);
-            //die method
+            gameOver = true;
         }
-        if (this.getX() + Gameplay.SNAKE_SQUARE > Gameplay.CANVAS_WIDTH) { //right
+        if (this.getX() + Gameplay.SNAKE_SQUARE > Gameplay.CANVAS_WIDTH - 310) { //right
             setDx(0);
             setDy(0);
+            gameOver = true;
         }
         if (this.getY() < 0) { //top
             setDx(0);
             setDy(0);
+            gameOver = true;
         }
         if (this.getY() + Gameplay.SNAKE_SQUARE > Gameplay.CANVAS_HEIGHT) { //bottom
             setDx(0);
             setDy(0);
+            gameOver = true;
         }
     }
 
@@ -146,5 +148,13 @@ public class SnakeHead extends Rectangle {
 
     public GraphicsGroup getSnakeBodyGroup() {
         return snakeBody.getSnakeBody();
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
     }
 }

@@ -1,9 +1,7 @@
 import comp127graphics.CanvasWindow;
-import comp127graphics.GraphicsGroup;
 import comp127graphics.GraphicsObject;
 import comp127graphics.Image;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -14,8 +12,8 @@ public class Board {
     Random random = new Random();
 
     private Image appleJuice, apple, banana, chickenSandwich,
-    chips, cookieMonster, cookie, frenchFries, juiceBox,
-    kale, rice, waterBottle;
+            chips, cookieMonster, cookie, frenchFries, juiceBox,
+            kale, rice, waterBottle;
 
     private GraphicsObject currentFood;
 
@@ -59,22 +57,21 @@ public class Board {
     /**
      * makes the first food item
      */
-    public void makeFood (CanvasWindow canvas, double x, double y) { //change to make sure that it does not
+    public void makeFood(CanvasWindow canvas, double x, double y) { //change to make sure that it does not
         currentFood = foods.get(random.nextInt(foods.size()));      //spawn outside of bounds and also not on the snake itself
         canvas.add(currentFood, x, y);
         System.out.println(x + "this is x");
         System.out.println(y + "this is y");
     }
 
-    public void foodEaten(SnakeHead head, CanvasWindow canvas) {
+    public void foodEaten(SnakeHead head, CanvasWindow canvas, ScoreBoard scoreBoard) {
         if (currentFood.getBounds().intersects(head.getBounds())) {
             canvas.remove(currentFood);
             makeFood(canvas, random.nextInt(Gameplay.CANVAS_WIDTH), random.nextInt(Gameplay.CANVAS_HEIGHT));
             head.snakeGrow();
+            scoreBoard.someoneScored();
         }
     }
-
-
 
 
 }
