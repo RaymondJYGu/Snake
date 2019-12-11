@@ -1,34 +1,28 @@
 import comp127graphics.GraphicsGroup;
-import comp127graphics.GraphicsObject;
 import comp127graphics.Rectangle;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class SnakeBody {
     private List<Rectangle> body;
     private GraphicsGroup snakeBody;
 
+    private int redTracker = 255;
+    private int blueTracker = 255;
+
     public SnakeBody(double x, double y, double width, double height) {
         body = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            body.add(new Rectangle(x-width/2, y, width, height));
-        }
         snakeBody = new GraphicsGroup();
-        addBodyToGroup();
-    }
 
-    public void addBodyToGroup() { // change color to spectrum, match growth rate
-        snakeBody.removeAll();
-        for (Rectangle rect: body) {
-            rect.setFilled(true);
-            int e = new Random().nextInt(255);
-            int f = new Random().nextInt(255);
-            int j = new Random().nextInt(255);
-            rect.setFillColor(new Color(e,f,j));
-            snakeBody.add(rect);
+        for (int i = 0; i < 20; i++) {
+            Rectangle firstBody = new Rectangle(x-width/2, y, width, height);
+            firstBody.setFilled(true);
+            firstBody.setStroked(false);
+            firstBody.setFillColor(chooseColor());
+            body.add(firstBody);
+            snakeBody.add(firstBody);
         }
     }
 
@@ -45,16 +39,51 @@ public class SnakeBody {
 
     public void grow() {
         for (int i = 0; i < 25; i++) {
-            body.add(new Rectangle(body.get(body.size() - 1).getX(), body.get(body.size() - 1).getY(),
+            Rectangle newBody = new Rectangle(body.get(body.size() - 1).getX(), body.get(body.size() - 1).getY(),
                     body.get(body.size() - 1).getWidth(),
-                    body.get(body.size() - 1).getHeight()));
-            addBodyToGroup();
+                    body.get(body.size() - 1).getHeight());
+            newBody.setFilled(true);
+            newBody.setStroked(false);
+            newBody.setFillColor(chooseColor());
+            body.add(newBody);
+            snakeBody.add(newBody);
+
+//            addBodyToGroup();
             i++;
         }
 
     }
 
+    public Color chooseColor() {
+        if(getRedTracker() > 1) { //at the end, red will be 1
+            setRedTracker(getRedTracker() - 2);
+        } else if (getBlueTracker() > 1 && getRedTracker() == 1) { //at the end, both will be 1
+            setBlueTracker(getBlueTracker() - 2);
+        } else if ((getBlueTracker() < 255) && (getRedTracker() < 255)) {
+            setBlueTracker(getBlueTracker() + 2);
+            setRedTracker(getRedTracker() + 2);
+        }
+
+        return new Color(getRedTracker(), 0, getBlueTracker());
+    }
+
     public GraphicsGroup getSnakeBody() {
         return snakeBody;
+    }
+
+    private int getRedTracker() {
+        return redTracker;
+    }
+
+    private void setRedTracker(int redTracker) {
+        this.redTracker = redTracker;
+    }
+
+    private int getBlueTracker() {
+        return blueTracker;
+    }
+
+    private void setBlueTracker(int blueTracker) {
+        this.blueTracker = blueTracker;
     }
 }

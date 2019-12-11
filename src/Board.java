@@ -62,7 +62,8 @@ public class Board {
     public void makeFood (CanvasWindow canvas, double x, double y) { //change to make sure that it does not
         currentFood = foods.get(random.nextInt(foods.size()));      //spawn outside of bounds and also not on the snake itself
         canvas.add(currentFood, x, y);
-        System.out.println("food should be made");
+        System.out.println(x + "this is x");
+        System.out.println(y + "this is y");
     }
 
     public void foodEaten(SnakeHead head, CanvasWindow canvas) {
