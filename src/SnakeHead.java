@@ -9,7 +9,7 @@ public class SnakeHead extends Rectangle {
     private Ellipse eye;
     private SnakeBody snakeBody;
 
-    private final double SNAKE_SPEED = 1;
+    private final double SNAKE_SPEED = 10;
 
     private double dx;
     private double dy;

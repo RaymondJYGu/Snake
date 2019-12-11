@@ -44,7 +44,7 @@ public class SnakeBody {
     }
 
     public void grow() {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 25; i++) {
             body.add(new Rectangle(body.get(body.size() - 1).getX(), body.get(body.size() - 1).getY(),
                     body.get(body.size() - 1).getWidth(),
                     body.get(body.size() - 1).getHeight()));

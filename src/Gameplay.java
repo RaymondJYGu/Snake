@@ -10,7 +10,9 @@ public class Gameplay {
 
     protected static final int CANVAS_WIDTH = 1000; //the specific size of the canvas is to fit the grass picture size
     protected static final int CANVAS_HEIGHT = 667; //fit the grass picture size
-    protected static final double SNAKE_SQUARE = CANVAS_WIDTH * 0.1;
+    protected static final double SNAKE_SQUARE = CANVAS_WIDTH * 0.025;
+    protected static final int HEIGHT_FOOD_LIMIT = CANVAS_HEIGHT - (int)SNAKE_SQUARE - 200; //even w/ 200, spawn wrong
+    protected static final int WIDTH_FOOD_LIMIT = CANVAS_WIDTH - (int)SNAKE_SQUARE - 200;
     private CanvasWindow canvas;
     private Image background = new Image(0, 0, "grass.jpg");
     private Board board;
@@ -22,8 +24,8 @@ public class Gameplay {
         canvas = new CanvasWindow("Snake!", CANVAS_WIDTH, CANVAS_HEIGHT);
         canvas.add(background);
         board = new Board();
-        board.makeFood(canvas,random.nextInt(CANVAS_WIDTH), random.nextInt(CANVAS_HEIGHT)); // fix the border alignment
-
+        board.makeFood(canvas,random.nextInt(WIDTH_FOOD_LIMIT),
+                random.nextInt(HEIGHT_FOOD_LIMIT));
         head = new SnakeHead(CANVAS_WIDTH * 0.5, CANVAS_HEIGHT * 0.5,
                 SNAKE_SQUARE, SNAKE_SQUARE);
         canvas.add(head);
