@@ -43,11 +43,15 @@ public class SnakeBody {
         }
     }
 
-    public void grow() { //make 20 segments per food
-        body.add(new Rectangle(body.get(body.size() - 1).getX(), body.get(body.size() - 1).getY(),
-                body.get(body.size() - 1).getWidth(),
-                body.get(body.size() - 1).getHeight()));
-        addBodyToGroup();
+    public void grow() {
+        for (int i = 0; i < 100; i++) {
+            body.add(new Rectangle(body.get(body.size() - 1).getX(), body.get(body.size() - 1).getY(),
+                    body.get(body.size() - 1).getWidth(),
+                    body.get(body.size() - 1).getHeight()));
+            addBodyToGroup();
+            i++;
+        }
+
     }
 
     public GraphicsGroup getSnakeBody() {

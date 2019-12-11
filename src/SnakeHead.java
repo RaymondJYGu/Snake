@@ -70,11 +70,11 @@ public class SnakeHead extends Rectangle {
                 moveDown();  // change direction to downwards when the key goes down
                 currentDirection = "down";
             }
-            if (event.getKey() == Key.LEFT_ARROW) {
+            if (event.getKey() == Key.LEFT_ARROW && !(currentDirection.equals("right"))) {
                 moveLeft();  // change direction to left when the key goes down
                 currentDirection = "left";
             }
-            if (event.getKey() == Key.RIGHT_ARROW) {
+            if (event.getKey() == Key.RIGHT_ARROW && !(currentDirection.equals("left"))) {
                 moveRight();  // change direction to right when the key goes down
                 currentDirection = "right";
             }
