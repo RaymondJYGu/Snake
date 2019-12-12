@@ -3,6 +3,9 @@ import comp127graphics.events.Key;
 
 public class SnakeHead extends Rectangle {
 
+    /*
+    hi
+     */
     private SnakeBody snakeBody;
 
     private double snakeSpeed = 5;
