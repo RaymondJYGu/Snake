@@ -9,8 +9,12 @@ public class ScoreBoard extends Rectangle {
     private double y;
     private GraphicsText label;
 
+
+    protected final double scoreBoardWidth;
+
     public ScoreBoard(double x, double y, double width, double height) {
         super(x, y, width, height);
+        scoreBoardWidth = width;
         this.x = x;
         this.y = y;
         label = new GraphicsText();

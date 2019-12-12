@@ -3,11 +3,9 @@ import comp127graphics.events.Key;
 
 public class SnakeHead extends Rectangle {
 
-    private Ellipse eye;
     private SnakeBody snakeBody;
 
-    private final double SNAKE_SPEED = 10;
-
+    private double snakeSpeed = 5;
     private double dx;
     private double dy;
     private double x;
@@ -32,8 +30,8 @@ public class SnakeHead extends Rectangle {
         setPreviousPosition(getPosition());
         snakeBody.intersects(this);
         snakeBody.bodyMove(this);
-        x = x + (dx * SNAKE_SPEED);
-        y = y + (dy * SNAKE_SPEED);
+        x = x + (dx * snakeSpeed);
+        y = y + (dy * snakeSpeed);
         this.setPosition(x, y);
 
     }
@@ -86,7 +84,7 @@ public class SnakeHead extends Rectangle {
             setDy(0);
             gameOver = true;
         }
-        if (this.getX() + Gameplay.SNAKE_SQUARE > Gameplay.CANVAS_WIDTH - 310) { //right
+        if (this.getX() + Gameplay.SNAKE_SQUARE > Gameplay.GRASS_WIDTH) { //right
             setDx(0);
             setDy(0);
             gameOver = true;
@@ -96,7 +94,7 @@ public class SnakeHead extends Rectangle {
             setDy(0);
             gameOver = true;
         }
-        if (this.getY() + Gameplay.SNAKE_SQUARE > Gameplay.CANVAS_HEIGHT) { //bottom
+        if (this.getY() + Gameplay.SNAKE_SQUARE > Gameplay.GRASS_HEIGHT) { //bottom
             setDx(0);
             setDy(0);
             gameOver = true;
@@ -108,8 +106,8 @@ public class SnakeHead extends Rectangle {
     }
 
 
-    public double getSNAKE_SPEED() {
-        return SNAKE_SPEED;
+    public double getSnakeSpeed() {
+        return snakeSpeed;
     }
 
     public double getDx() {
@@ -156,5 +154,9 @@ public class SnakeHead extends Rectangle {
 
     public void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
+    }
+
+    public void setSnakeSpeed(double snakeSpeed) {
+        this.snakeSpeed = snakeSpeed;
     }
 }

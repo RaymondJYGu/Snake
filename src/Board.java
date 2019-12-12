@@ -1,6 +1,7 @@
 import comp127graphics.CanvasWindow;
 import comp127graphics.GraphicsObject;
 import comp127graphics.Image;
+import comp127graphics.ui.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ public class Board {
 
     private Image appleJuice, apple, banana, chickenSandwich,
             chips, cookieMonster, cookie, frenchFries, juiceBox,
-            kale, rice, waterBottle;
+            rice, waterBottle;
 
     private GraphicsObject currentFood;
 
@@ -45,8 +46,6 @@ public class Board {
         foods.add(frenchFries);
         juiceBox = new Image(0, 0, "foodImages/juiceBoxScaled.png");
         foods.add(juiceBox);
-        kale = new Image(0, 0, "foodImages/kaleScaled.png");
-        foods.add(kale);
         rice = new Image(0, 0, "foodImages/riceScaled.png");
         foods.add(rice);
         waterBottle = new Image(0, 0, "foodImages/waterBottleScaled.png");
@@ -58,20 +57,30 @@ public class Board {
      * makes the first food item
      */
     public void makeFood(CanvasWindow canvas, double x, double y) { //change to make sure that it does not
-        currentFood = foods.get(random.nextInt(foods.size()));      //spawn outside of bounds and also not on the snake itself
-        canvas.add(currentFood, x, y);
-        System.out.println(x + "this is x");
-        System.out.println(y + "this is y");
+        currentFood = foods.get(random.nextInt(foods.size())); //spawn outside of bounds and also not on the snake itself
+            canvas.add(currentFood, x, y);
     }
 
     public void foodEaten(SnakeHead head, CanvasWindow canvas, ScoreBoard scoreBoard) {
         if (currentFood.getBounds().intersects(head.getBounds())) {
             canvas.remove(currentFood);
-            makeFood(canvas, random.nextInt(Gameplay.CANVAS_WIDTH), random.nextInt(Gameplay.CANVAS_HEIGHT));
+            makeFood(canvas,
+                    checkFoodBounds(Math.random() * Gameplay.GRASS_WIDTH - currentFood.getBounds().getWidth()),
+                    checkFoodBounds(Math.random() * Gameplay.GRASS_HEIGHT - currentFood.getBounds().getHeight()));
             head.snakeGrow();
             scoreBoard.someoneScored();
         }
     }
 
+    public double checkFoodBounds(double bound) {
+        if(bound < 0) {
+            return 0;
+        } else {
+            return bound;
+        }
+    }
 
+    public GraphicsObject getCurrentFood() {
+        return currentFood;
+    }
 }
