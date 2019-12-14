@@ -1,11 +1,11 @@
-import comp127graphics.*;
+import comp127graphics.CanvasWindow;
+import comp127graphics.GraphicsGroup;
+import comp127graphics.Point;
+import comp127graphics.Rectangle;
 import comp127graphics.events.Key;
 
 public class SnakeHead extends Rectangle {
 
-    /*
-    hi
-     */
     private SnakeBody snakeBody;
 
     private double snakeSpeed = 5;

@@ -23,7 +23,7 @@ public class ScoreBoard extends Rectangle {
         label.setPosition(x + 50, y + 50);
     }
 
-    public void someoneScored() {
+    public void pointScored() {
         score++;
         label.setText("Score: " + score);
     }

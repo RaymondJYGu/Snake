@@ -1,7 +1,6 @@
 import comp127graphics.CanvasWindow;
 import comp127graphics.GraphicsObject;
 import comp127graphics.Image;
-import comp127graphics.ui.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +57,7 @@ public class Board {
      */
     public void makeFood(CanvasWindow canvas, double x, double y) { //change to make sure that it does not
         currentFood = foods.get(random.nextInt(foods.size())); //spawn outside of bounds and also not on the snake itself
-            canvas.add(currentFood, x, y);
+        canvas.add(currentFood, x, y);
     }
 
     public void foodEaten(SnakeHead head, CanvasWindow canvas, ScoreBoard scoreBoard) {
@@ -68,12 +67,12 @@ public class Board {
                     checkFoodBounds(Math.random() * Gameplay.GRASS_WIDTH - currentFood.getBounds().getWidth()),
                     checkFoodBounds(Math.random() * Gameplay.GRASS_HEIGHT - currentFood.getBounds().getHeight()));
             head.snakeGrow();
-            scoreBoard.someoneScored();
+            scoreBoard.pointScored();
         }
     }
 
     public double checkFoodBounds(double bound) {
-        if(bound < 0) {
+        if (bound < 0) {
             return 0;
         } else {
             return bound;
