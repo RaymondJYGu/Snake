@@ -1,5 +1,16 @@
-import comp127graphics.*;
+import comp127graphics.CanvasWindow;
+import comp127graphics.FontStyle;
+import comp127graphics.GraphicsText;
+import comp127graphics.Image;
 import comp127graphics.ui.Button;
+
+
+/**
+ * Authors:
+ * Shalu Patel
+ * Nate Gorjance
+ * Gu Jingyao
+ */
 
 
 public class Gameplay {
@@ -20,13 +31,18 @@ public class Gameplay {
     private Button noButton;
     private GraphicsText currentDifficulty;
 
-
+    /**
+     * Creates the object that handles running the game in an infinite loop
+     */
     public Gameplay() {
         canvas = new CanvasWindow("Snake!", CANVAS_WIDTH, CANVAS_HEIGHT);
         resetGame();
         animate();
     }
 
+    /**
+     * Deletes the current active round of Snake and then creates a new one
+     */
     public void resetGame() {
         canvas.removeAll();
 
@@ -47,7 +63,7 @@ public class Gameplay {
         currentDifficulty = new GraphicsText();
         currentDifficulty.setText("Current Difficulty: Easy");
         canvas.add(currentDifficulty);
-        currentDifficulty.setCenter(scoreBoard.getCenter().getX(),scoreBoard.getCenter().getY()+currentDifficulty.getHeight()+10);
+        currentDifficulty.setCenter(scoreBoard.getCenter().getX(), scoreBoard.getCenter().getY() + currentDifficulty.getHeight() + 10);
 
         easyButton = new Button("Easy");
         easyButton.setPosition(scoreBoard.getCenter().getX() - 100, 300);
@@ -63,6 +79,9 @@ public class Gameplay {
         functionality();
     }
 
+    /**
+     * handles the listeners for buttons and keyboard presses during the current active round of Snake
+     */
     public void functionality() {
         head.checkKeyboardInput(canvas);
 
@@ -80,6 +99,10 @@ public class Gameplay {
         noButton.onClick(() -> canvas.closeWindow());
     }
 
+    /**
+     * Handles the canvas animating function separate from the single round aspect of the game.
+     * This prevents calling animate multiple times as it is not removed ever from the current canvas
+     */
     public void animate() {
         canvas.animate(() -> {
             if (head.isGameOver()) {
@@ -90,6 +113,9 @@ public class Gameplay {
         });
     }
 
+    /**
+     * Creates the Game Over splash screen to handle resetting into a new game or exiting the application
+     */
     private void gameOver() {
         canvas.removeAll();
         GraphicsText gameOverLabel = new GraphicsText();
@@ -102,7 +128,6 @@ public class Gameplay {
         yesButton.setPosition(CANVAS_WIDTH * 0.35, CANVAS_HEIGHT * 0.6);
         noButton.setPosition(CANVAS_WIDTH * 0.55, CANVAS_HEIGHT * 0.6);
     }
-
 
     public static void main(String[] args) {
         new Gameplay();

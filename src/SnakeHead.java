@@ -17,6 +17,14 @@ public class SnakeHead extends Rectangle {
     private String currentDirection = "none";
     private boolean gameOver = false;
 
+    /**
+     * This creates the SnakeHead object
+     *
+     * @param x      the x position to create the object at
+     * @param y      the y position to create the object at
+     * @param width  the width of the bounding Rectangle that is SnakeHead
+     * @param height the height of the bounding Rectangle that is SnakeHead
+     */
     public SnakeHead(double x, double y, double width, double height) {
         super(x, y, width, height);
         setFilled(true);
@@ -28,6 +36,10 @@ public class SnakeHead extends Rectangle {
         snakeBody = new SnakeBody(getCenter().getX() - width, getY(), width, height);
     }
 
+    /**
+     * Handles the functionality of checking death conditions (boundaries and touching body)
+     * and then moves the SnakeHead according to the current snakeSpeed
+     */
     public void moveSnake() {
         checkBoundaries();
         setPreviousPosition(getPosition());
@@ -39,27 +51,47 @@ public class SnakeHead extends Rectangle {
 
     }
 
+    /**
+     * Creates the limited movement aspect of snake in the cardinal directions
+     * This method handles the left/west moving motion
+     */
     public void moveLeft() {
         setDx(-1);
         setDy(0);
     }
 
+    /**
+     * Creates the limited movement aspect of snake in the cardinal directions
+     * This method handles the right/east moving motion
+     */
     public void moveRight() {
         setDx(1);
         setDy(0);
     }
 
+    /**
+     * Creates the limited movement aspect of snake in the cardinal directions
+     * This method handles the up/north moving motion
+     */
     public void moveUp() {
         setDx(0);
         setDy(-1);
     }
 
+    /**
+     * Creates the limited movement aspect of snake in the cardinal directions
+     * This method handles the down/south moving motion
+     */
     public void moveDown() {
         setDx(0);
         setDy(1);
     }
 
-
+    /**
+     * This is the keyboard listener handler that checks for user input for movement and then moves accordingly
+     *
+     * @param canvas the canvas that listens to the keyboard inputs
+     */
     public void checkKeyboardInput(CanvasWindow canvas) {
         canvas.onKeyDown(event -> {
             if (event.getKey() == Key.UP_ARROW && !(currentDirection.equals("down"))) {
@@ -81,6 +113,9 @@ public class SnakeHead extends Rectangle {
         });
     }
 
+    /**
+     * Handles the checking for the bounding edges of the snake game
+     */
     public void checkBoundaries() {
         if (this.getX() < 0) { //left
             setDx(0);
@@ -104,21 +139,11 @@ public class SnakeHead extends Rectangle {
         }
     }
 
+    /**
+     * Calls the grow function to increase the SnakeBody size
+     */
     public void snakeGrow() {
         snakeBody.grow();
-    }
-
-
-    public double getSnakeSpeed() {
-        return snakeSpeed;
-    }
-
-    public double getDx() {
-        return dx;
-    }
-
-    public double getDy() {
-        return dy;
     }
 
     public void setDx(double dx) {
